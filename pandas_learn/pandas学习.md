@@ -95,3 +95,84 @@ pandas.DataFrame(data=None, index=None, columns=None, dtype=None, copy=False)
 - columns：DataFrame 的列索引，用于标识每列数据。可以是列表、数组、索引对象等。如果不提供此参数，则创建一个默认的整数索引。
 - dtype：指定 DataFrame 的数据类型。可以是 NumPy 的数据类型，例如 np.int64、np.float64 等。如果不提供此参数，则根据数据自动推断数据类型。
 - copy：是否复制数据。默认为 False，表示不复制数据。如果设置为 True，则复制输入的数据。
+
+## Pandas CSV
+- pd.read_csv()	从 CSV 文件读取数据并加载为 DataFrame	filepath_or_buffer (路径或文件对象)，sep (分隔符)，header (行标题)，names (自定义列名)，dtype (数据类型)，index_col (索引列)
+- DataFrame.to_csv()	将 DataFrame 写入到 CSV 文件	path_or_buffer (目标路径或文件对象)，sep (分隔符)，index (是否写入索引)，columns (指定列)，header (是否写入列名)，mode (写入模式)
+
+## Pandas json
+Pandas 提供了强大的方法来处理 JSON 格式的数据，支持从 JSON 文件或字符串中读取数据并将其转换为 DataFrame，以及将 DataFrame 转换回 JSON 格式。
+- 从 JSON 文件/字符串读取数据	pd.read_json()	从 JSON 数据中读取并加载为 DataFrame
+- 将 DataFrame 转换为 JSON	DataFrame.to_json()	将 DataFrame 转换为 JSON 格式的数据，可以指定结构化方式
+- 支持 JSON 结构化方式	orient 参数	支持多种结构化方式，如 split、records、columns
+
+data = json.loads(f.read()) 使用 Python JSON 模块载入数据。
+json_normalize() 使用了参数 record_path 并设置为 ['students'] 用于展开内嵌的 JSON 数据 students。
+显示结果还没有包含 school_name 和 class 元素，如果需要展示出来可以使用 meta 参数来显示这些元数据
+
+## Pandas数据清洗
+- 数据清洗是对一些没有用的数据进行处理的过程。
+- 很多数据集存在数据缺失、数据格式错误、错误数据或重复数据的情况，如果要使数据分析更加准确，就需要对这些没有用的数据进行处理。
+- 数据清洗与预处理的常见步骤：
+- 缺失值处理：识别并填补缺失值，或删除含缺失值的行/列。
+- 重复数据处理：检查并删除重复数据，确保每条数据唯一。
+- 异常值处理：识别并处理异常值，如极端值、错误值。
+- 数据格式转换：转换数据类型或进行单位转换，如日期格式转换。
+- 标准化与归一化：对数值型数据进行标准化（如 Z-score）或归一化（如 Min-Max）。
+- 类别数据编码：将类别变量转换为数值形式，常见方法包括 One-Hot 编码和标签编码。
+- 文本处理：对文本数据进行清洗，如去除停用词、词干化、分词等。
+- 数据抽样：从数据集中抽取样本，或通过过采样/欠采样处理类别不平衡。
+- 特征工程：创建新特征、删除不相关特征、选择重要特征等。
+
+## pandas 常用函数
+
+### 读取数据
+- pd.read_csv(filename) 读取csv文件
+- pd.read_excel(filename) 读取Excel文件
+- pd.read_sql(filename) 从SQL数据库读取数据
+- pd.read_json(json_string) 从json字符串中读取数据
+- pd.read_html(url) 从html页面读取数据
+
+### 查看数据
+- df.head(n)	显示前 n 行数据；
+- df.tail(n)	显示后 n 行数据；
+- df.info()	显示数据的信息，包括列名、数据类型、缺失值等；
+- df.describe()	显示数据的基本统计信息，包括均值、方差、最大值、最小值等；
+- df.shape	显示数据的行数和列数。
+
+### 数据的选择和切片
+- df[column_name] 选择指定的列
+- df.loc[row_index,column_name]
+- df.iloc[cow_index,column_index]
+- df.ix[row_index,column_name]
+- df.filter[column_name1,column_name2]
+- df.filter(regex='regex') 根据正则表达式选择列
+- df.sample(n=5). 随机选择n行
+
+### 数据排序
+- df.sort_values(column_name)	按照指定列的值排序；
+- df.sort_values([column_name1, column_name2], ascending=[True, False])	按照多个列的值排序；
+- df.sort_index()	按照索引排序。
+
+### 数据分组和聚合
+- df.groupby(column_name)	按照指定列进行分组；
+- df.aggregate(function_name)	对分组后的数据进行聚合操作；
+- df.pivot_table(values, index, columns, aggfunc)	生成透视表。
+
+### 数据合并
+- pd.concat([df1, df2])	将多个数据框按照行或列进行合并；
+- pd.merge(df1, df2, on=column_name)	按照指定列将两个数据框进行合并。
+
+### 数据的选择和过滤
+- df.loc[row_indexer, column_indexer]	按标签选择行和列。 可以通过标签和索引选择
+- df.iloc[row_indexer, column_indexer]	按位置选择行和列。 只能通过位置选择
+- df[df['column_name'] > value]	选择列中满足条件的行。
+- df.query('column_name > value')	使用字符串表达式选择列中满足条件的行。
+
+### 数据的统计和描述
+
+- df.describe()	计算基本统计信息，如均值、标准差、最小值、最大值等。
+- df.mean()	计算每列的平均值。
+- df.median()	计算每列的中位数。
+- df.mode()	计算每列的众数。
+- df.count()	计算每列非缺失值的数量。
