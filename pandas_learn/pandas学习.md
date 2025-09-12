@@ -176,3 +176,87 @@ json_normalize() 使用了参数 record_path 并设置为 ['students'] 用于展
 - df.median()	计算每列的中位数。
 - df.mode()	计算每列的众数。
 - df.count()	计算每列非缺失值的数量。
+
+## 数据可视化
+- 折线图	展示数据随时间或其他连续变量的变化趋势	df.plot(kind='line')
+- 柱状图	比较不同类别的数据	df.plot(kind='bar')
+- 水平柱状图	比较不同类别的数据，但柱子水平排列	df.plot(kind='barh')
+- 直方图	显示数据的分布	df.plot(kind='hist')
+- 散点图	展示两个数值型变量之间的关系	df.plot(kind='scatter', x='col1', y='col2')
+- 箱线图	显示数据分布，包括中位数、四分位数等	df.plot(kind='box')
+- 密度图	展示数据的密度分布	df.plot(kind='kde')
+- 饼图	显示不同部分在整体中的占比	df.plot(kind='pie')
+- 区域图	展示数据的累计数值	df.plot(kind='area')
+
+## Pandas 高级功能
+Pandas 提供了非常强大的数据操作功能，适用于复杂的数据清洗、分析、聚合和时间序列处理等任务。
+### 数据的合并与连接
+Pandas 提供了多个方法来合并和连接不同的 DataFrame，例如 merge()、concat() 和 join()。这些方法常用于处理多个数据集和复杂的合并任务。
+
+**1.merge()**
+
+merge() 方法允许根据某些列对两个 DataFrame 进行合并，类似 SQL 中的 JOIN 操作。支持内连接、外连接、左连接和右连接。
+
+~~~~
+import pandas as pd
+
+# 示例数据
+left = pd.DataFrame({'ID': [1, 2, 3], 'Name': ['Alice', 'Bob', 'Charlie']})
+right = pd.DataFrame({'ID': [1, 2, 4], 'Age': [24, 27, 22]})
+
+# 使用 merge 进行内连接
+result = pd.merge(left, right, on='ID', how='inner')
+print(result)
+~~~~
+
+**2.contact()**
+
+concat() 用于将多个 DataFrame 沿指定轴（行或列）进行连接，常用于行合并（垂直连接）或列合并（水平连接）。
+~~~~
+import pandas as pd
+
+# 示例数据
+df1 = pd.DataFrame({'A': [1, 2, 3]})
+df2 = pd.DataFrame({'A': [4, 5, 6]})
+
+# 行合并 axis=0表示按行合并 axis=1表示按列合并
+result = pd.concat([df1, df2], axis=0, ignore_index=True) 
+print(result)
+~~~~
+
+**3.join()**
+
+join() 方法是 Pandas 中的简化连接操作，通常用于基于索引将多个 DataFrame 连接。
+
+###时间序列处理
+
+**1. date_range() — 生成时间序列**
+
+start	起始日期
+end	结束日期
+periods	生成的时间点数
+freq	频率（如 D 表示天，H 表示小时等）
+
+**2.pd.Timedelta()日期和时间的偏移**
+
+**3.时间窗口操作（Rolling, Expanding）**
+
+rolling()	计算滚动窗口操作，常用于移动平均等
+expanding()	计算扩展窗口操作，累计值
+
+## Pandas性能优化
+1. 使用适当的数值类型 
+   Pandas 默认的数值类型是 int64 和 float64，但对于大部分数据，这可能会浪费内存。可以使用更小的类型，如 int8, int16, float32 等。
+2. 对字符数据使用 category 类型
+对于具有重复值的字符串列，可以使用 category 类型来减少内存消耗。category 类型在内存中存储的是整数索引，而不是字符串本身。
+3. Pandas 的最大优势之一就是其能够利用向量化操作进行快速的批量运算。在 Pandas 中，尽量避免使用 Python 的原生循环，应该使用 Pandas 内置的函数，这样可以利用底层的优化进行快速计算。
+~~~~
+import pandas as pd
+
+# 示例数据
+df = pd.DataFrame({'A': [1, 2, 3, 4], 'B': [5, 6, 7, 8]})
+
+# 使用向量化操作，避免使用循环
+df['C'] = df['A'] + df['B']
+print(df)
+~~~~
