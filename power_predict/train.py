@@ -65,12 +65,13 @@ for index,train_dataset in enumerate(datasets):
         if i==index:
             continue
         else:
-
+            #加载现有模型
+            model=joblib.load('/kaggle/working/model_trained_on_5-Site_1.joblib')
             test_df=preprocess_data(test_dataset)
             X_test=test_df.drop(['Active_Power','timestamp'],axis=1)
             y_test=test_df['Active_Power']
             X_test_rfe = X_test.reindex(columns=X_train_rfe.columns, fill_value=0)
-            y_pred=model.predict(X_test)
+            y_pred=model.predict(X_test_rfe)
 
             mse=mean_squared_error(y_test, y_pred)
             rmse=np.sqrt(mse)

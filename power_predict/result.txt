@@ -1,0 +1,72 @@
+['Current_Phase_Average_Mean', 'Global_Horizontal_Radiation', 'Temperature_Probe_1', 'Temperature_Probe_2', 'hour_cos', 'month_cos']
+[0]	validation_0-rmse:164.55131	validation_1-rmse:173.23114
+[20]	validation_0-rmse:59.43339	validation_1-rmse:67.82904
+[40]	validation_0-rmse:22.38112	validation_1-rmse:30.26435
+[60]	validation_0-rmse:10.40840	validation_1-rmse:17.26151
+[80]	validation_0-rmse:7.49583	validation_1-rmse:12.94653
+[100]	validation_0-rmse:6.94431	validation_1-rmse:11.52321
+[120]	validation_0-rmse:6.80323	validation_1-rmse:11.10085
+[140]	validation_0-rmse:6.73947	validation_1-rmse:10.94176
+[160]	validation_0-rmse:6.68133	validation_1-rmse:10.89639
+[180]	validation_0-rmse:6.62605	validation_1-rmse:10.89450
+[199]	validation_0-rmse:6.57581	validation_1-rmse:10.89153
+
+模型已保存为: /kaggle/working//xgboost_model_trained_on_5-Site_1.joblib
+重要特征: ['Current_Phase_Average_Mean', 'Active_Energy_Delivered_Received', 'Global_Horizontal_Radiation', 'Temperature_Probe_1', 'Temperature_Probe_2', 'year', 'hour_cos']
+[0]	validation_0-rmse:62.63418	validation_1-rmse:52.58385
+[20]	validation_0-rmse:22.46999	validation_1-rmse:18.95314
+[40]	validation_0-rmse:8.07464	validation_1-rmse:6.92231
+[60]	validation_0-rmse:2.93498	validation_1-rmse:2.57985
+[80]	validation_0-rmse:1.14760	validation_1-rmse:1.02905
+[100]	validation_0-rmse:0.60468	validation_1-rmse:0.81215
+[120]	validation_0-rmse:0.48497	validation_1-rmse:1.00442
+[140]	validation_0-rmse:0.46208	validation_1-rmse:1.16498
+[160]	validation_0-rmse:0.45385	validation_1-rmse:1.23554
+[180]	validation_0-rmse:0.44940	validation_1-rmse:1.28733
+[199]	validation_0-rmse:0.44595	validation_1-rmse:1.30510
+
+模型已保存为: /kaggle/working//xgboost_model_trained_on_10-Site_2.joblib
+重要特征: ['Current_Phase_Average_Mean', 'Active_Energy_Delivered_Received', 'Global_Horizontal_Radiation', 'Temperature_Probe_1', 'Temperature_Probe_2', 'year', 'hour_cos']
+[0]	validation_0-rmse:89.10018	validation_1-rmse:76.58817
+[20]	validation_0-rmse:31.97493	validation_1-rmse:27.76198
+[40]	validation_0-rmse:11.51029	validation_1-rmse:10.20726
+[60]	validation_0-rmse:4.23503	validation_1-rmse:3.62262
+[80]	validation_0-rmse:1.77021	validation_1-rmse:1.36681
+[100]	validation_0-rmse:1.08310	validation_1-rmse:1.52320
+[120]	validation_0-rmse:0.93554	validation_1-rmse:1.92421
+[140]	validation_0-rmse:0.89676	validation_1-rmse:2.25142
+[160]	validation_0-rmse:0.87613	validation_1-rmse:2.33313
+[180]	validation_0-rmse:0.86184	validation_1-rmse:2.34509
+[199]	validation_0-rmse:0.84998	validation_1-rmse:2.35871
+
+模型已保存为: /kaggle/working//xgboost_model_trained_on_11-Site_4.joblib
+/tmp/ipykernel_36/2165353062.py:9: DtypeWarning: Columns (1,2,3,4,5,6,7,8,9,10,11,12,13) have mixed types. Specify dtype option on import or set low_memory=False.
+  data = pd.read_csv(file_path, encoding='gbk')
+重要特征: ['Current_Phase_Average_Mean', 'Active_Energy_Delivered_Received', 'Global_Horizontal_Radiation', 'Temperature_Probe_1', 'Temperature_Probe_2', 'year', 'hour_cos']
+[0]	validation_0-rmse:12.84485	validation_1-rmse:13.98979
+[20]	validation_0-rmse:4.61108	validation_1-rmse:5.13170
+[_1-rmse:0.7873040]	validation_0-rmse:1.65863	validation_1-rmse:1.93138
+[60]	validation_0-rmse:0.60480	validation
+[80]	validation_0-rmse:0.23909	validation_1-rmse:0.38015
+[100]	validation_0-rmse:0.12826	validation_1-rmse:0.24758
+[120]	validation_0-rmse:0.10306	validation_1-rmse:0.21636
+[140]	validation_0-rmse:0.09696	validation_1-rmse:0.22047
+[160]	validation_0-rmse:0.09464	validation_1-rmse:0.23072
+[180]	validation_0-rmse:0.09257	validation_1-rmse:0.23276
+[199]	validation_0-rmse:0.09097	validation_1-rmse:0.23314
+
+模型已保存为: /kaggle/working//xgboost_model_trained_on_6-Site_3-C.joblib
+重要特征: ['Current_Phase_Average_Mean', 'Global_Horizontal_Radiation', 'Temperature_Probe_1', 'Temperature_Probe_2', 'hour_cos', 'month_cos']
+[0]	validation_0-rmse:28.61690	validation_1-rmse:27.15244
+[20]	validation_0-rmse:10.27064	validation_1-rmse:9.89269
+[40]	validation_0-rmse:3.70593	validation_1-rmse:3.70693
+[60]	validation_0-rmse:1.38624	validation_1-rmse:1.50319
+[80]	validation_0-rmse:0.62699	validation_1-rmse:0.74028
+[100]	validation_0-rmse:0.43538	validation_1-rmse:0.49510
+[120]	validation_0-rmse:0.39890	validation_1-rmse:0.41952
+[140]	validation_0-rmse:0.39042	validation_1-rmse:0.39370
+[160]	validation_0-rmse:0.38635	validation_1-rmse:0.38527
+[180]	validation_0-rmse:0.38362	validation_1-rmse:0.38200
+[199]	validation_0-rmse:0.37921	validation_1-rmse:0.38207
+
+模型已保存为: /kaggle/working//xgboost_model_trained_on_8-Site_5.joblib
