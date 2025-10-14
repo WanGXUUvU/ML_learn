@@ -239,6 +239,7 @@ def test_xgboost_model(datasets):
                     df = preprocess_data(test_dataset)
                     x_test = df.drop(['Active_Power', 'timestamp'], axis=1)
                     y_test = df['Active_Power']
+                    timestamps = df['timestamp']  # 保存时间戳用于绘图
 
                     # 确保测试数据使用与训练时相同的特征
                     x_test = x_test.reindex(columns=training_features, fill_value=0)
@@ -263,6 +264,9 @@ def test_xgboost_model(datasets):
                     print(f'RMSE: {rmse:.4f}')
                     print(f'MAE: {mae:.4f}')
                     print(f'R²: {r2:.4f}')
+                    
+                    # 绘制预测结果对比图（只显示前1000个点避免图形过于密集）
+                    plot_prediction_comparison(timestamps, y_test, y_pred, test_dataset.split('/')[-1], max_points=1000)
                 
                 # 输出汇总结果
                 print("\n" + "="*60)
@@ -282,13 +286,14 @@ def test_xgboost_model(datasets):
                 break
                 
             elif 1 <= choice <= len(datasets):
-                # 选择单个数据集测试（对应原来的0-4）
+                # 选择单个数据集测试
                 test_dataset = datasets[choice-1]
                 print(f"你选择的是：{test_dataset}")
                 
                 df = preprocess_data(test_dataset)
                 x_test = df.drop(['Active_Power', 'timestamp'], axis=1)
                 y_test = df['Active_Power']
+                timestamps = df['timestamp']  # 保存时间戳用于绘图
 
                 # 确保测试数据使用与训练时相同的特征
                 x_test = x_test.reindex(columns=training_features, fill_value=0)
@@ -300,12 +305,16 @@ def test_xgboost_model(datasets):
                 rmse = np.sqrt(mse)
                 r2 = r2_score(y_test, y_pred)
                 mae = mean_absolute_error(y_test, y_pred)
+                
                 print(f"\n在 {test_dataset.split('/')[-1]} 上的测试结果:")
                 print("-" * 40)
                 print(f'XGBoost模型 - 均方误差 (MSE): {mse:.4f}')
                 print(f'XGBoost模型 - 均方根误差 (RMSE): {rmse:.4f}')
                 print(f'XGBoost模型 - 平均绝对误差 (MAE): {mae:.4f}')
                 print(f'XGBoost模型 - R²得分: {r2:.4f}')
+                
+                # 绘制预测结果对比图
+                plot_prediction_comparison(timestamps, y_test, y_pred, test_dataset.split('/')[-1])
                 break
                 
             else:
@@ -313,6 +322,58 @@ def test_xgboost_model(datasets):
         except ValueError:
             print("输入无效，请输入数字编号。")
 
+def plot_prediction_comparison(timestamps, y_true, y_pred, dataset_name, max_points=2000):
+    """
+    绘制预测结果与真实结果的对比折线图
+    
+    参数:
+    timestamps: 时间戳
+    y_true: 真实值
+    y_pred: 预测值
+    dataset_name: 数据集名称
+    max_points: 最大显示点数（避免图形过于密集）
+    """
+    # 如果数据点太多，进行采样
+    if len(y_true) > max_points:
+        step = len(y_true) // max_points
+        timestamps = timestamps[::step]
+        y_true = y_true[::step]
+        y_pred = y_pred[::step]
+        print(f"数据点过多，已采样显示前 {len(y_true)} 个点")
+    
+    plt.figure(figsize=(15, 8))
+    
+    # 绘制真实值和预测值
+    plt.plot(timestamps, y_true, label='真实值 (True)', color='blue', alpha=0.7, linewidth=1)
+    plt.plot(timestamps, y_pred, label='预测值 (Predicted)', color='red', alpha=0.7, linewidth=1)
+    
+    plt.title(f'预测结果对比 - {dataset_name}', fontsize=14)
+    plt.xlabel('时间', fontsize=12)
+    plt.ylabel('Active Power', fontsize=12)
+    plt.legend(fontsize=12)
+    plt.grid(True, alpha=0.3)
+    
+    # 自动调整x轴标签角度
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+    
+    # 另外绘制散点图显示预测精度
+    plt.figure(figsize=(8, 6))
+    plt.scatter(y_true, y_pred, alpha=0.5, s=1)
+    
+    # 绘制理想预测线 (y=x)
+    min_val = min(min(y_true), min(y_pred))
+    max_val = max(max(y_true), max(y_pred))
+    plt.plot([min_val, max_val], [min_val, max_val], 'r--', linewidth=2, label='理想预测线')
+    
+    plt.xlabel('真实值', fontsize=12)
+    plt.ylabel('预测值', fontsize=12)
+    plt.title(f'预测精度散点图 - {dataset_name}', fontsize=14)
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.show()
 # 可选：快速查看所有数据集的异常值情况
 def quick_outlier_summary(datasets):
     """快速查看所有数据集的异常值情况"""
@@ -346,7 +407,7 @@ if __name__ == "__main__":
     quick_outlier_summary(datasets)
     
     # 训练模型（现在会自动清理异常值）
-    #train_xgboost_model(datasets)
+    train_xgboost_model(datasets)
     # 测试模型
     #test_xgboost_model(datasets)
 
